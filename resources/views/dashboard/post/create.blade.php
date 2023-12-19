@@ -25,8 +25,8 @@
         <select name="category_id" id="">
             <option value=""></option>
             {{-- peticion de categorias  --}}
-            @foreach ( $categories as $cate )
-            <option value=" {{$cate->id}}">{{$cate->title}}</option>
+            @foreach ($categories as $title => $id)
+            <option value="{{$id}}">{{ $title }}</option>
             @endforeach
         </select>
         {{--  --}}

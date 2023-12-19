@@ -23,8 +23,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
-        $categories = Category::get();
+        //obtener los registros dos formas
+        // $categories = Category::get();
+        //recomendada
+        $categories = Category::pluck('id','title');
         echo view('dashboard.post.create',compact('categories'));
     }
 
@@ -33,8 +35,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
+        //verificar los array
+        $data = array_merge($request->all(),['image' => '']);
+        dd($data);
+        //para verificar que datos se mostraran
+        Post::create($data);
 
     }
 
