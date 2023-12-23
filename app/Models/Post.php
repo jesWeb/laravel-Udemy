@@ -11,6 +11,6 @@ class Post extends Model
 
     //brinda seguridad y crea un array
 
-   protected $fillable = ['title','slug' ,'content' , 'category_id', 'description','image'];
+   protected $fillable = ['title', 'slug' , 'content' , 'image', 'category_id', 'description', 'posted'];
 
 }

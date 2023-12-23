@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Post\StoretRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Http\Request;
+
 
 class PostController extends Controller
 {
@@ -33,13 +37,35 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoretRequest $request)
     {
+
+        //validacion local
+    //    $validate = $request->validate([
+    //         //
+    //         "title" => "required|min:5|max:100",
+    //         "slug" => "required|min:5|max:400",
+    //         "content" => "required|min:15|max:200",
+    //         "category_id" => "required|integer",
+    //         "description" => "required|min:10",
+    //         "posted" => "required"
+    //     ]);
+
+    //     dd($validate);
+
+
+
         //verificar los array
         $data = array_merge($request->all(),['image' => '']);
+
+        //geerar url limpia forma uno
+        // $data=$request->validated();
+        // $data ['slug'] =Str::slug($data['title']);
+
         dd($data);
         //para verificar que datos se mostraran
-        Post::create($data);
+        // Post::create($data);
+        Post::create($request->validated());
 
     }
 
