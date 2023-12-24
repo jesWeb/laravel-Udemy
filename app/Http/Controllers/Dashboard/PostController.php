@@ -20,6 +20,8 @@ class PostController extends Controller
     public function index()
     {
         //
+        $posts = Post::get();
+        return view('dashboard.post.index',compact('posts'));
     }
 
     /**
@@ -40,8 +42,7 @@ class PostController extends Controller
      */
     public function store(StoretRequest $request)
     {
-
-        //validacion local
+    //validacion local
     //    $validate = $request->validate([
     //         //
     //         "title" => "required|min:5|max:100",
@@ -54,18 +55,18 @@ class PostController extends Controller
 
     //     dd($validate);
 
-
-
-        //verificar los array
-        $data = array_merge($request-> all(),['image' => '']);
+        // no necesario verificar los array
+        // $data = array_merge($request-> all(),['image' => '']);
 
         //geerar url limpia forma uno
         // $data=$request->validated();
         // $data ['slug'] =Str::slug($data['title']);
-         //dd($data);
-        //para verificar que datos se mostraran
-         Post::create($data);
-        // Post::create($request->validated());
+        //dd($data);
+
+
+         //para verificar que datos se mostraran
+         //Post::create($data);
+         Post::create($request->validated());
 
     }
 

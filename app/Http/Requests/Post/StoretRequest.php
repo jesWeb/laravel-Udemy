@@ -13,8 +13,8 @@ class StoretRequest extends FormRequest
     {
         $this->merge(
             [
-                // 'slug' => Str::slug($this->title)
-                'slug' => str($this->title)->slug()
+                  'slug' => Str::slug($this->title)
+                //  'slug' => Str($this->title)->slug()
             ]
         );
     }
