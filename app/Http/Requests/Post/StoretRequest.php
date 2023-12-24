@@ -11,11 +11,12 @@ class StoretRequest extends FormRequest
     //funcion de url limpia
     protected function prepareForValidation()
     {
-    $this->merge(
-    [
-        'slug' => Str::slug($this->title)
-    ]
-    );
+        $this->merge(
+            [
+                // 'slug' => Str::slug($this->title)
+                'slug' => str($this->title)->slug()
+            ]
+        );
     }
 
 
@@ -39,11 +40,12 @@ class StoretRequest extends FormRequest
         return [
             //
             "title" => "required|min:5|max:100",
-            "slug" => "required|min:5|max:400",
-            "content" => "required|min:15|max:200",
-            "category_id" => "required|integer",
+            "slug" => "required|min:5|max:400|unique:posts",
+            "categories_id" => "required",
+            "posted" => "required",
             "description" => "required|min:10",
-            "posted" => "required"
+            "content" => "required|min:15|max:200"
+
         ];
     }
 }

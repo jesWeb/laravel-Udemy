@@ -30,8 +30,9 @@ class PostController extends Controller
         //obtener los registros dos formas
         // $categories = Category::get();
         //recomendada
-        $categories = Category::pluck('id','title');
-        echo view('dashboard.post.create',compact('categories'));
+        $categories = Category::pluck('id', 'title');
+
+        echo view('dashboard.post.create', compact('categories'));
     }
 
     /**
@@ -56,16 +57,15 @@ class PostController extends Controller
 
 
         //verificar los array
-        $data = array_merge($request->all(),['image' => '']);
+        $data = array_merge($request-> all(),['image' => '']);
 
         //geerar url limpia forma uno
         // $data=$request->validated();
         // $data ['slug'] =Str::slug($data['title']);
-
-        dd($data);
+         //dd($data);
         //para verificar que datos se mostraran
-        // Post::create($data);
-        Post::create($request->validated());
+         Post::create($data);
+        // Post::create($request->validated());
 
     }
 

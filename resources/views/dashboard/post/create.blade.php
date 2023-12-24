@@ -6,7 +6,7 @@
 {{-- alerta de errores --}}
 @include('dashboard.fragment.errors-form')
 
-<form action="{{route('post.store')}}" method="post">
+<form action="{{route('post.store')}}" method="POST">
     @csrf
 
     {{--  --}}
@@ -17,7 +17,7 @@
     <input type="text" name="slug" id="">
     {{--  --}}
     <label for="">Categoria</label>
-    <select name="category_id" id="">
+    <select name="categories_id" id="">
         <option value=""></option>
         {{-- peticion de categorias  --}}
         @foreach ($categories as $title => $id)
@@ -36,8 +36,6 @@
     {{--  --}}
     <label for="">Contenido</label>
     <textarea name="content" id=""></textarea>
-
-
 
     <button type="submit">enviar</button>
 

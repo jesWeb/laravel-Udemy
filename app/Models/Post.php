@@ -10,7 +10,6 @@ class Post extends Model
     use HasFactory;
 
     //brinda seguridad y crea un array
-
-   protected $fillable = ['title', 'slug' , 'content' , 'image', 'category_id', 'description', 'posted'];
+   protected $fillable = ['title', 'slug' , 'categories_id' , 'posted' , 'description', 'content' , 'image' ];
 
 }
