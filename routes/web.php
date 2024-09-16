@@ -14,12 +14,51 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (){
     return view('welcome');
 });
 
+//r******uta de ejecisio******
+Route::get('/test', function () {
+ return view('test');
+});
 
-//ruta forma trtadicional pero funcional 
+// Route::get('/practica', function (){
+//     return view('/test');
+// });
+
+
+// Route::get('/crud', function () {
+// return view('crud/index');
+// });
+
+//******pasando parametros en las vistas****
+
+
+
+// Route::get('/crud', function () {
+
+//     $age = 25;
+//     $data = ['name' => 'jesus', 'age' => $age];
+
+// return view('crud/index',$data);
+// });
+
+//**RUTA CON nombre  */
+
+Route::get('/crud', function () {
+
+    $age = 25;
+    $data = ['name' => 'jesus', 'age' => $age];
+
+return view('crud/index',$data);
+})->name('crudcito');
+
+
+
+
+
+//ruta forma trtadicional pero funcional
 Route::resource('post', PostController::class);
 
 
