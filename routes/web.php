@@ -23,9 +23,9 @@ Route::get('/test', function () {
  return view('test');
 });
 
-// Route::get('/practica', function (){
-//     return view('/test');
-// });
+Route::get('/practica', function (){
+    return view('/test');
+});
 
 
 // Route::get('/crud', function () {
@@ -54,7 +54,19 @@ Route::get('/crud', function () {
 return view('crud/index',$data);
 })->name('crudcito');
 
+/**Rutas de tarea */
+Route::get('/contact', function () {
+    $name = ['name'=> 'Ferrari'];
+    //formas de redirraccionar
+    // return redirect('/carro',303);
+    // return redirect()->route('carro');
+    return to_route('carro');
 
+})->name('contact');
+
+Route::get('/carro', function () {
+    return view('contact/carro');
+})->name('carro');
 
 
 
