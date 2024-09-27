@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Post\StoretRequest;
+use App\Http\Requests\Post\PutRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use illuminate\Support\Facades\Validator;
 
 
 class PostController extends Controller
@@ -20,8 +22,13 @@ class PostController extends Controller
     public function index()
     {
         //
-        $posts = Post::get();
-        return view('dashboard.post.index',compact('posts'));
+        // $posts = Post::get();
+
+       //paginaciion
+        $posts = Post::paginate(3);
+
+        //retorna la data  el posts es el referente ala variable
+        return view('dashboard.post.index', compact('posts'));
     }
 
     /**
@@ -31,29 +38,51 @@ class PostController extends Controller
     {
         //obtener los registros dos formas
         // $categories = Category::get();
-        //recomendada
-        $categories = Category::pluck('id', 'title');
 
-        echo view('dashboard.post.create', compact('categories'));
+        //forma 2 recomendada por que pasa los parametros que necesitmos
+        $categories = Category::pluck('id', 'title');
+        $post = new Post();
+        return view('dashboard/post/create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
+     * el nombre del metodo storeRequest lo recibe de lo que creamos en request
      */
     public function store(StoretRequest $request)
     {
-    //validacion local
-    //    $validate = $request->validate([
-    //         //
-    //         "title" => "required|min:5|max:100",
-    //         "slug" => "required|min:5|max:400",
-    //         "content" => "required|min:15|max:200",
-    //         "category_id" => "required|integer",
-    //         "description" => "required|min:10",
-    //         "posted" => "required"
-    //     ]);
 
-    //     dd($validate);
+        Post::create($request->validated());
+        return to_route('post.index');
+
+        //validacion local 1 forma
+        // $request->validate([
+        //      //
+        //      "title" => "required|min:5|<max:100></max:100>",
+        //      "slug" => "required|min:5|max:400",
+        //      "content" => "required|min:15|max:200",
+        //      "category_id" => "required|integer",
+        //      "description" => "required|min:10",
+        //      "posted" => "required"
+        //  ]);
+
+
+
+        //SEGUNDA FORMA
+
+        //  $validate = validator::make($request->all(),
+        //  [
+        //      //
+        //      "title" => "required|min:5|<max:100></max:100>",
+        //      "slug" => "required|min:5|max:400",
+        //      "content" => "required|min:15|max:200",
+        //      "category_id" => "required|integer",
+        //      "description" => "required|min:10",
+        //      "posted" => "required"
+        //  ]);
+
+        //  dd($validate);
+
 
         // no necesario verificar los array
         // $data = array_merge($request-> all(),['image' => '']);
@@ -64,9 +93,10 @@ class PostController extends Controller
         //dd($data);
 
 
-         //para verificar que datos se mostraran
-         //Post::create($data);
-         Post::create($request->validated());
+        //para verificar que datos se mostraran
+        //Post::create($data);
+
+
 
     }
 
@@ -84,14 +114,21 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         //
+        $categories = Category::pluck('id','title');
+
+        return view('.post.edit', compact('categories','post'));
+
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update( PutRequest $request, Post $post)
     {
-        //
+        //aui trabajamos con la actualizacion y traemos el store request
+        $post->update($request->validated());
+        return to_route('post.index');
     }
 
     /**

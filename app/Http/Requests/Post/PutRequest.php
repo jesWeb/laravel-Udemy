@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 use  Illuminate\Support\Str;
 
-class StoretRequest extends FormRequest
+class PutRequest extends FormRequest
 {
     //funcion de url limpia
     protected function prepareForValidation()
@@ -36,11 +36,11 @@ class StoretRequest extends FormRequest
      */
     public function rules(): array
     {
-        //definir reglas aqui colocamos los campos del form el unique es unico y hace la referencia a el compact 
+        //definir reglas aqui colocamos los campos del form el unique es unico y hace la referencia a el compact
         return [
             //
             "title" => "required|min:5|max:100",
-            "slug" => "required|min:5|max:400|unique:posts",
+             "slug" => "required|min:5|max:400|unique:posts,slug".$this->route('post')->id,
             "categories_id" => "required",
             "posted" => "required",
             "description" => "required|min:10",
