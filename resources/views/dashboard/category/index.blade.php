@@ -1,29 +1,25 @@
 @extends('dashboard.layout')
 
 @section('content')
-    <a href="{{ route('post.create') }}" target="blank">Crear nuevo</a>
+    <a href="{{ route('category.create') }}" target="blank">Crear nuevo</a>
 
     <table>
         <thead>
 
+            <th>id</th>
             <th>Titulo</th>
-            <th>Categoria</th>
-            <th>Posted</th>
-            <th>Acciones</th>
-
         </thead>
         <tbody>
-            @foreach ($posts as $p)
+            @foreach ($categories as $c)
                 <tr>
-                    <td>{{ $p->title }}</td>
-                    <td>{{ $p->posted }}</td>
-                    <td>{{ $p->categories_id }}</td>
+                    <td>{{ $c->title }}</td>
+                    <td>{{ $c->categories_id }}</td>
                     {{-- acciones --}}
                     <td>
-                        <a href="{{ route('post.edit', $p->id) }}">Editar</a>
-                         <a href="{{ route('post.show', $p->id) }}">Ver</a>
+                        <a href="{{ route('category.edit', $c->id) }}">Editar</a>
+                         <a href="{{ route('category.show', $c->id) }}">Ver</a>
                         {{--  btn de eliminar --}}
-                        <form action="{{route('post.destroy',$p)}}" method="post">
+                        <form action="{{route('category.destroy',$c)}}" method="post">
                             {{-- elimina token  --}}
                             @csrf
                             @method('DELETE')
@@ -35,5 +31,5 @@
         </tbody>
     </table>
     {{-- aqui esta la paginacion de laravel --}}
-    {{ $posts->links() }}
+    {{ $categories->links() }}
 @endsection

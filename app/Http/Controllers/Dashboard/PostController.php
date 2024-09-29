@@ -24,7 +24,7 @@ class PostController extends Controller
         //
         // $posts = Post::get();
 
-       //paginaciion
+        //paginaciion
         $posts = Post::paginate(3);
 
         //retorna la data  el posts es el referente ala variable
@@ -42,7 +42,7 @@ class PostController extends Controller
         //forma 2 recomendada por que pasa los parametros que necesitmos
         $categories = Category::pluck('id', 'title');
         $post = new Post();
-        return view('dashboard/post/create', compact('categories'));
+        return view('dashboard/post/create', compact('categories', 'post'));
     }
 
     /**
@@ -105,7 +105,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        //vista de detalle
+        return view('dashboard/post/show', ['post' => $post]);
     }
 
     /**
@@ -114,18 +115,29 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         //
-        $categories = Category::pluck('id','title');
+        $categories = Category::pluck('id', 'title');
 
-        return view('.post.edit', compact('categories','post'));
-
-
+        return view('dashboard/post.edit', compact('categories', 'post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update( PutRequest $request, Post $post)
+    public function update(PutRequest $request, Post $post)
     {
+        //cargar imagenes pt1
+
+        $data = $request->validated();
+        //img
+        /*['image'] este es a donde se va acceder
+        pero antes hacemos la verificaicones de si el usario subio una imagen */
+        if (isset($data['image'])) {
+            $data['image'] = $filename = time() . '.' . $data['image']->extension();
+            //aqui veremos donde mandaremos l imGEN Al cumplir la validacion
+            $request->image->move(public_path('uploads/posts'), $filename);
+        }
+
+
         //aui trabajamos con la actualizacion y traemos el store request
         $post->update($request->validated());
         return to_route('post.index');
@@ -136,6 +148,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        //eliminacion
+        //nota hace la eliminacion a nivel logico  no fisico
+        $post->delete();
+        return to_route('post.index');
     }
 }

@@ -13,7 +13,7 @@ class PutRequest extends FormRequest
     {
         $this->merge(
             [
-                  'slug' => Str::slug($this->title)
+                'slug' => Str::slug($this->title)
                 //  'slug' => Str($this->title)->slug()
             ]
         );
@@ -40,11 +40,14 @@ class PutRequest extends FormRequest
         return [
             //
             "title" => "required|min:5|max:100",
-             "slug" => "required|min:5|max:400|unique:posts,slug".$this->route('post')->id,
+            "slug" => "required|min:5|max:400|unique:posts,slug," . $this->route("post")->id,
             "categories_id" => "required",
             "posted" => "required",
             "description" => "required|min:10",
-            "content" => "required|min:15|max:200"
+            "content" => "required|min:15|max:200",
+            //imagen junto con archivos permitidos
+            'image' => 'mimes:png,jpg | max:10240 '
+
 
         ];
     }

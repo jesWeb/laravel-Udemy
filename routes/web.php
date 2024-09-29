@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\PostController;
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,6 +73,12 @@ Route::get('/carro', function () {
 
 
 //ruta forma trtadicional pero funcional
-Route::resource('post', PostController::class);
+// Route::resource('post', PostController::class);
+// Route::resource('category', CategoryController::class);
 
+//rutas agrupadas
+Route::group(['prefix'=>'dashboard'],function(){
+    Route::resource('post', PostController::class);
+    Route::resource('category', CategoryController::class);
 
+});

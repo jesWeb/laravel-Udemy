@@ -1,18 +1,18 @@
 {{-- este es un toquen crea una proteccion en el formulario csrf tipo segridad --}}
 @csrf
 <label for="title">Titulo</label>
-<input type="text" name="title" id="" value="{{ old('title',$post->title)  }}">
+<input type="text" name="title" id="" value="{{ old('title', $post ->title) }}">
 {{--  --}}
 <label for="slug">Slug</label>
-<input type="text" name="slug" id="" value="{{ old('slug',$post->title)}}">
+<input type="text" name="slug" id="" value="{{ old('slug', $post ->slug) }}">
 {{--  --}}
 <label for="">Categoria</label>
 <select name="categories_id" id="">
     <option value=""></option>
     {{-- peticion de categorias tipo clave valor  --}}
     @foreach ($categories as $title => $id)
-    <option {{old($post->categories_id)== $id ? 'selected' : '' }} value="{{ $id }}">
-        {{ $title }}</option>
+        <option {{ old($post->categories_id) == $id ? 'selected' : '' }} value="{{ $id }}">
+            {{ $title }}</option>
     @endforeach
 </select>
 {{--  --}}
@@ -23,9 +23,15 @@
 </select>
 {{--  --}}
 <label for="">Descripcion</label>
-<textarea name="description" id="" >{{old('description',$post->description)}}</textarea>
+<textarea name="description" id="">{{ old('description', $post->description) }}</textarea>
 {{--  --}}
 <label for="">Contenido</label>
-<textarea name="content" id="">{{ old('content',$post->content) }}</textarea>
+<textarea name="content" id="">{{ old('content', $post->content) }}</textarea>
+
+{{-- validacion de imagen donde los parametrso estan en  la vista inical  --}}
+@if ( isset($task) && $task == 'edit')
+<label for="">Image</label>
+<input type="file" name="image" id="">
+@endif
 
 <button type="submit">enviar</button>
