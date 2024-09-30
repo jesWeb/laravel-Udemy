@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\PostController;
-use Illuminate\Routing\RouteGroup;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,69 +16,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (){
+Route::get('/', function () {
     return view('welcome');
 });
 
-//r******uta de ejecisio******
-Route::get('/test', function () {
- return view('test');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/practica', function (){
-    return view('/test');
-});
+//ruta protegida con middleware usolo pasamos la parte de las rutas creadas
+Route::group(['prefix'=>'dashboard','middleware'  => "auth"],function(){
 
+    Route::get('/', function () {
+        return view('dashboard');
+    })->name("dashboard");
 
-// Route::get('/crud', function () {
-// return view('crud/index');
-// });
-
-//******pasando parametros en las vistas****
-
-
-
-// Route::get('/crud', function () {
-
-//     $age = 25;
-//     $data = ['name' => 'jesus', 'age' => $age];
-
-// return view('crud/index',$data);
-// });
-
-//**RUTA CON nombre  */
-
-Route::get('/crud', function () {
-
-    $age = 25;
-    $data = ['name' => 'jesus', 'age' => $age];
-
-return view('crud/index',$data);
-})->name('crudcito');
-
-/**Rutas de tarea */
-Route::get('/contact', function () {
-    $name = ['name'=> 'Ferrari'];
-    //formas de redirraccionar
-    // return redirect('/carro',303);
-    // return redirect()->route('carro');
-    return to_route('carro');
-
-})->name('contact');
-
-Route::get('/carro', function () {
-    return view('contact/carro');
-})->name('carro');
-
-
-
-//ruta forma trtadicional pero funcional
-// Route::resource('post', PostController::class);
-// Route::resource('category', CategoryController::class);
-
-//rutas agrupadas
-Route::group(['prefix'=>'dashboard'],function(){
     Route::resource('post', PostController::class);
     Route::resource('category', CategoryController::class);
 
 });
+
+require __DIR__.'/auth.php';

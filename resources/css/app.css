@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+
+
+
+@layer components {
+.btn {
+    @apply border rounded px-3 py-2 text-white font-bold bg-yellow-300
+}
+
+.table{
+    @apply w-full table-auto
+}
+
+.table th {
+    @apply px-6 py-4 bg-gray-50 font-medium text-white uppercase border leading-5
+  }
+
+  .table tr {
+ @apply border
+}
+
+.table td {
+    @apply px-6 py-4 whitespace-normal
+}
+
+.form-control{
+    @apply block rounded-sm shadow-sm bg-blue-200 w-full
+}
+
+
+}
+
