@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 });
 
 //ruta protegida con middleware usolo pasamos la parte de las rutas creadas
-Route::group(['prefix'=>'dashboard','middleware'  => "auth"],function(){
+Route::group(['prefix'=>'dashboard','middleware'  => ['auth','admin']],function(){
 
     Route::get('/', function () {
         return view('dashboard');
